@@ -9,6 +9,7 @@ import numpy as np
 import cv2
 
 
+
 # Constants
 ALPHA = 0.5
 FONT = cv2.FONT_HERSHEY_PLAIN
@@ -90,6 +91,7 @@ class BBoxVisualization():
 
     def draw_bboxes(self, img, box, conf, cls):
         """Draw detected bounding boxes on the original image."""
+        final_txt = " "
         for bb, cf, cl in zip(box, conf, cls):
             cl = int(cl)
             y_min, x_min, y_max, x_max = bb[0], bb[1], bb[2], bb[3]
@@ -98,5 +100,6 @@ class BBoxVisualization():
             txt_loc = (max(x_min+2, 0), max(y_min+2, 0))
             cls_name = self.cls_dict.get(cl, 'CLS{}'.format(cl))
             txt = '{} {:.2f}'.format(cls_name, cf)
+            final_txt = txt+";"
             img = draw_boxed_text(img, txt, txt_loc, color)
-        return img
+        return img, final_txt

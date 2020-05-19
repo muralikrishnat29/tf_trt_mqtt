@@ -25,6 +25,8 @@ from utils.camera import add_camera_args, Camera
 from utils.od_utils import read_label_map, build_trt_pb, load_trt_pb, \
                            write_graph_tensorboard, detect
 from utils.visualization import BBoxVisualization
+from mqtt_ops import establish_connection, mqtt_publish, mqtt_direct_publish
+from mqtt_publisher import Publisher
 
 
 # Constants
@@ -95,7 +97,7 @@ def set_full_screen(full_scrn):
     cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, prop)
 
 
-def loop_and_detect(cam, tf_sess, conf_th, vis, od_type):
+def loop_and_detect(cam, tf_sess, conf_th, vis, mqtt_publisher, od_type):
     """Loop, grab images from camera, and do object detection.
 
     # Arguments
@@ -117,7 +119,12 @@ def loop_and_detect(cam, tf_sess, conf_th, vis, od_type):
         img = cam.read()
         if img is not None:
             box, conf, cls = detect(img, tf_sess, conf_th, od_type=od_type)
-            img = vis.draw_bboxes(img, box, conf, cls)
+            
+            img, txt = vis.draw_bboxes(img, box, conf, cls)
+            print(txt)
+            #mqtt_direct_publish(topic = "traffic/object/detections", objects = txt, broker_addr = "192.168.0.105", port = 1883)
+            #mqtt_publish(mqtt_client, "traffic/object/detections", txt)
+            mqtt_publisher.publish_value(topic = "traffic/object/detections", value = txt)
             if show_fps:
                 img = draw_help_and_fps(img, fps)
             cv2.imshow(WINDOW_NAME, img)
@@ -136,7 +143,6 @@ def loop_and_detect(cam, tf_sess, conf_th, vis, od_type):
             full_scrn = not full_scrn
             set_full_screen(full_scrn)
 
-
 def main():
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -146,6 +152,10 @@ def main():
 
     args = parse_args()
     logger.info('called with args: %s' % args)
+
+    #MQTT Client Initialisation
+    broker_addr = "192.168.0.105"
+    mqtt_publisher = Publisher("trafficPublisher",broker_addr)
 
     # build the class (index/name) dictionary from labelmap file
     logger.info('reading label map')
@@ -186,7 +196,7 @@ def main():
     logger.info('starting to loop and detect')
     vis = BBoxVisualization(cls_dict)
     open_display_window(cam.img_width, cam.img_height)
-    loop_and_detect(cam, tf_sess, args.conf_th, vis, od_type=od_type)
+    loop_and_detect(cam, tf_sess, args.conf_th, vis, mqtt_publisher, od_type=od_type)
 
     logger.info('cleaning up')
     cam.stop()  # terminate the sub-thread in camera
