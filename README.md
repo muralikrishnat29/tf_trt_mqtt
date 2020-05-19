@@ -1,3 +1,7 @@
+This is a modified version (not much just the addition of MQTT module) of the original code by JK-Jung
+
+Ref: https://jkjung-avt.github.io
+
 TensorFlow/TensorRT Models on Jetson
 ====================================
 
