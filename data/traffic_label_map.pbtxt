@@ -1,0 +1,16 @@
+item {
+ id: 1
+ name: 'Stop'
+}
+item {
+ id: 2
+ name: 'Go'
+}
+item {
+ id: 3
+ name: 'Warn'
+}
+item {
+ id: 4
+ name: 'Side Red'
+}
