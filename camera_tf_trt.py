@@ -66,7 +66,7 @@ def parse_args():
                         default=0.3, type=float)
     parser.add_argument('--brokerIP', dest='brokerIP',
                         help='Broker IP Address',
-                        default=0.3, type=str)
+                        default='192.168.0.105', type=str)
     args = parser.parse_args()
     return args
 
