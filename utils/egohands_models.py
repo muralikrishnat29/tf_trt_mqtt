@@ -35,6 +35,10 @@ SUPPORTED_MODELS = {
         'config_path': 'data/faster_rcnn_inception_v2_egohands.config',
         'checkpoint_path': 'data/faster_rcnn_inception_v2_egohands/model.ckpt-50000',
     },
+    'traffic_light_custom': {
+        'config_path': 'data/traffic_light_custom.config',
+        'checkpoint_path': 'data/traffic_light_custom/model.ckpt-10000',
+    },
 }
 
 

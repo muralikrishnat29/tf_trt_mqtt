@@ -25,7 +25,7 @@ from utils.camera import add_camera_args, Camera
 from utils.od_utils import read_label_map, build_trt_pb, load_trt_pb, \
                            write_graph_tensorboard, detect
 from utils.visualization import BBoxVisualization
-from mqtt_ops import establish_connection, mqtt_publish, mqtt_direct_publish
+#from mqtt_ops import establish_connection, mqtt_publish, mqtt_direct_publish
 from mqtt_publisher import Publisher
 
 
@@ -64,6 +64,9 @@ def parse_args():
     parser.add_argument('--confidence', dest='conf_th',
                         help='confidence threshold [0.3]',
                         default=0.3, type=float)
+    parser.add_argument('--brokerIP', dest='brokerIP',
+                        help='Broker IP Address',
+                        default=0.3, type=str)
     args = parser.parse_args()
     return args
 
@@ -155,7 +158,7 @@ def main():
 
     #MQTT Client Initialisation
     broker_addr = "192.168.0.105"
-    mqtt_publisher = Publisher("trafficPublisher",broker_addr)
+    mqtt_publisher = Publisher("trafficPublisher",args.brokerIP)
 
     # build the class (index/name) dictionary from labelmap file
     logger.info('reading label map')

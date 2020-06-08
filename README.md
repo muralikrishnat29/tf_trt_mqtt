@@ -2,6 +2,8 @@ This is a modified version (not much just the addition of MQTT module) of the or
 
 Ref: https://jkjung-avt.github.io
 
+Please make sure Tensorflow-gpu version 1.12.0 and Tensorflow Object Detection API (using install.sh present in this repo) are installed
+
 TensorFlow/TensorRT Models on Jetson
 ====================================
 
