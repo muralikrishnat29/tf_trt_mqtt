@@ -101,8 +101,8 @@ class BBoxVisualization():
             cls_name = self.cls_dict.get(cl, 'CLS{}'.format(cl))
             txt = '{} {:.2f}'.format(cls_name, cf)
             final_txt = txt+";"
-            #To notify 0 detections
-            if(final_txt==None or final_txt==";"):
-              final_txt = 'N;'
             img = draw_boxed_text(img, txt, txt_loc, color)
+        #To notify 0 detections
+        if(final_txt==None or final_txt==";" or final_txt==" "):
+          final_txt = 'N'
         return img, final_txt
