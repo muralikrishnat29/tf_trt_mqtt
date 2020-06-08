@@ -4,6 +4,8 @@ Ref: https://jkjung-avt.github.io
 
 Please make sure Tensorflow-gpu version 1.12.0 and Tensorflow Object Detection API (using install.sh present in this repo) are installed
 
+Also during the first run, please make sure to include --build tag to build the graph.
+
 TensorFlow/TensorRT Models on Jetson
 ====================================
 
