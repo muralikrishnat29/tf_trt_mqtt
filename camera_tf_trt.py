@@ -125,8 +125,6 @@ def loop_and_detect(cam, tf_sess, conf_th, vis, mqtt_publisher, od_type):
             
             img, txt = vis.draw_bboxes(img, box, conf, cls)
             print(txt)
-            #mqtt_direct_publish(topic = "traffic/object/detections", objects = txt, broker_addr = "192.168.0.105", port = 1883)
-            #mqtt_publish(mqtt_client, "traffic/object/detections", txt)
             mqtt_publisher.publish_value(topic = "traffic/object/detections", value = txt)
             if show_fps:
                 img = draw_help_and_fps(img, fps)

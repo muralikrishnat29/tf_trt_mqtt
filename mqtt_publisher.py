@@ -29,7 +29,6 @@ class Publisher:
         print("Lost connection")
 
     def on_publish(self, client, userdata, mid):
-        print("Data published"+str(userdata))
         pass
 
     def publish_value(self, topic, value):

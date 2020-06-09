@@ -6,8 +6,13 @@ Please make sure Tensorflow-gpu version 1.12.0 and Tensorflow Object Detection A
 
 Also during the first run, please make sure to include --build tag to build the graph.
 
-### Sample command for the first run: 
-python3 camera_tf_trt.py --model traffic_light_custom --num-classes 4 --brokerIP 192.162.0.105 --labelmap data/traffic_label_map.pbtxt --build --file --filename ~/Downloads/00020495.png
+### Sample command for the first and subsequent runs: 
+
+## First Run:
+python3 camera_tf_trt.py --model traffic_light_custom --num-classes 3 --brokerIP 192.162.0.105 --labelmap data/traffic_label_map.pbtxt --build --file --filename ~/Downloads/00020495.png
+
+## Next Run:
+python3 camera_tf_trt.py --model traffic_light_custom --num-classes 3 --brokerIP 192.162.0.105 --labelmap data/traffic_label_map.pbtxt --file --filename ~/Downloads/00020495.png
 
 TensorFlow/TensorRT Models on Jetson
 ====================================
